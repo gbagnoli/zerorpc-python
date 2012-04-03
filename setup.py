@@ -22,12 +22,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
 execfile('zerorpc/version.py')
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+
+requirements = ['gevent',
+                'msgpack-python',
+                'pyzmq-static==2.1.7']
+
+if sys.version_info < (2, 7):
+    requirements.append('argparse')
 
 
 setup(
@@ -37,12 +45,7 @@ setup(
     author=__author__,
     url='https://github.com/dotcloud/zerorpc-python',
     packages=['zerorpc'],
-    install_requires=[
-            'argparse',
-            'gevent',
-            'msgpack-python',
-            'pyzmq-static==2.1.7',
-    ],
+    install_requires=requirements,
     zip_safe=False,
     scripts=[
             'bin/zerorpc'
